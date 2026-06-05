@@ -20,6 +20,10 @@ Creators, prompt engineers, and developers shipping real work on Grok Imagine wh
 
 Unofficial and not affiliated with xAI. Core hard limits in this guide were cross-checked against the official xAI documentation (`docs.x.ai`) in June 2026; figures tagged **_reported_** come from secondary sources and should be verified before you hard-commit. Video 1.5 is a **Preview** — treat every limit as a strong default and trust your own test results when they diverge. Always review generated output before using it in client deliverables.
 
+### ▶️ Featured example
+
+**[Cinematic romance drama — 5 shots, hard cuts, spoken dialogue, in ONE generation](examples/cinematic-romance-drama-t2v.md)** — a fully annotated text-to-video prompt showing timeline segmentation, hard cuts, and constraint-locking. More in [`examples/`](examples/).
+
 ---
 
 ## Table of Contents
