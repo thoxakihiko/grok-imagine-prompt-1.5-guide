@@ -35,7 +35,7 @@ Unofficial and not affiliated with xAI. Core hard limits in this guide were cros
 5. [PART C — VIDEO: THE PHRASEBOOK (validated patterns per mode)](#5-part-c--video-the-phrasebook-validated-patterns-per-mode)
 6. [Anti-Patterns](#6-anti-patterns)
 7. [Ready-to-Use Templates](#7-ready-to-use-templates)
-8. [Routing Note — Grok Imagine 1.5 vs Seedance 2.0](#8-routing-note--grok-imagine-15-vs-seedance-20)
+8. [Routing Note — Grok Imagine 1.5 vs Seedance 2.0 / 2.5](#8-routing-note--grok-imagine-15-vs-seedance-20--25)
 9. [Sources & Provenance](#9-sources--provenance)
 10. [Contributing & Accuracy](#10-contributing--accuracy)
 
@@ -378,26 +378,30 @@ Sound: [cues]. Extend forward [2–10] seconds.
 
 ---
 
-## 8. Routing Note — Grok Imagine 1.5 vs Seedance 2.0
+## 8. Routing Note — Grok Imagine 1.5 vs Seedance 2.0 / 2.5
 
-A quick decision table for choosing between the two when both are on the table.
+A quick decision table for choosing between them when they are all on the table. The Seedance 2.5 column (added September 2026) comes from [ByteDance's Seedance 2.5 announcement](https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5); cells marked _n/c_ are **not confirmed** for 2.5 yet, so don't assume they carry over from 2.0.
 
-| | **Grok Imagine 1.5** | **Seedance 2.0** |
-|---|---|---|
-| Philosophy | image-first, one complete shot with audio | multi-asset orchestration |
-| Input asset | 1 image (first frame) OR 1–7 references | up to 12 mixed assets (`@image/@video/@audio`) |
-| Resolution | ≤720p | up to 1080p |
-| Duration | 1–15 s | 4–15 s |
-| Audio | native; strong **lip-synced dialogue** | native + **music beat-sync** |
-| Real human face | supported | **not supported** |
-| Syntax | natural language, `Sound:` block | `@material` role-tagging, timeline segmentation |
-| Iteration | fast & cheap | heavier, more control |
+| | **Grok Imagine 1.5** | **Seedance 2.0** | **Seedance 2.5** |
+|---|---|---|---|
+| Philosophy | image-first, one complete shot with audio | multi-asset orchestration | multi-asset orchestration + long one-take |
+| Input asset | 1 image (first frame) OR 1–7 references | up to 12 mixed assets (`@image/@video/@audio`) | up to **30 images + 10 videos + 10 audio** per prompt; new **clay-render** (pose, motion path, camera angle), **motion**, and **creative** references |
+| Resolution | ≤720p | up to 1080p | _n/c_ |
+| Duration | 1–15 s | 4–15 s | up to **30 s** single pass + **multi-round extension** (characters/environment stay consistent) |
+| Audio | native; strong **lip-synced dialogue** | native + **music beat-sync** | _n/c_ |
+| Real human face | supported | **not supported** | _n/c_ |
+| Syntax | natural language, `Sound:` block | `@material` role-tagging, timeline segmentation | _n/c_ |
+| Editing | video editing, extension | not covered here | timestamp-level, green screen / background replacement, camera perspective, reference-based |
+| Iteration | fast & cheap | heavier, more control | _n/c_ |
+| API | `grok-imagine-video` | BytePlus API | **not public yet** — coming soon via BytePlus ModelArk |
 
 **Choose Grok Imagine 1.5 when**: animating a finished still, talking-head / lip-sync dialogue, short shot extensions, fast & cheap iteration, or when you need a real human face.
 
-**Choose Seedance 2.0 when**: you need multi-asset composition (combining several images/videos/audio), music beat-sync, camera/action control from a separate reference video, 1080p output, or one continuous shot across spaces.
+**Choose Seedance 2.0 when**: you need multi-asset composition (combining several images/videos/audio), music beat-sync, camera/action control from a separate reference video, 1080p output, or one continuous shot across spaces — and you need API access today.
 
-> **Routing heuristic**: signals like "lip-sync / talking / from this photo / extend the clip" → Grok 1.5. Signals like "combine several references / music beat / `@video` / 1080p / continuous shot" → Seedance.
+**Choose Seedance 2.5 when**: you need a continuous take longer than 15 s (up to 30 s per pass, extendable across rounds), a very large reference set, clay-render / motion references for pose and camera path, or timestamp-level and green-screen edits — and you can work without a public API for now.
+
+> **Routing heuristic**: signals like "lip-sync / talking / from this photo / extend the clip" → Grok 1.5. Signals like "combine several references / music beat / `@video` / 1080p / continuous shot" → Seedance. Signals like "longer than 15 s / 30 s one-take / clay render / green screen" → Seedance 2.5.
 
 ---
 
@@ -410,6 +414,7 @@ A quick decision table for choosing between the two when both are on the table.
 | **GitHub `Rion-Wu-tech/grok-video-workflow`** | 4096-char prompt limit, reference-to-video ≤10 s, dual-model API, known instability (text/hands/identity) | GRAMMAR (constraints) |
 | **GitHub `that-cod/awesome-grok-imagine-prompts`** (earlier era) | community front-loading principle (cross-validates Aurora), linear actions, avoid negations | GRAMMAR (sequencing, era-flagged) |
 | **Morphic guide** | 5-element anatomy, weak/strong principle, one-action-per-clip, lip-sync rule, reference-for-consistency, specs (24 fps, 7 AR) | GRAMMAR (anatomy) |
+| **ByteDance Seed blog — Seedance 2.5** | Seedance 2.5 column in §8 (30 s single pass, multi-round extension, 30/10/10 references, new reference types, editing modes, API status) | ROUTING (official announcement) |
 | **Secondary** (AVB / Runware / PixelDojo / Alici) | image resolution 1K/2K, image aspect ratios, `n`≤10, per-second pricing context, moderation behavior | *reported* — verify before hard-commit |
 
 **Accuracy note**: figures tagged **_reported_** come from secondary/press sources, not an official spec sheet. The core hard limits (durations, resolution, frame rate, model strings, text-to-video support, image-pro deprecation date) were confirmed against `docs.x.ai` in June 2026. Video 1.5 is a Preview; treat limits as strong defaults and trust your own test results when they diverge.
